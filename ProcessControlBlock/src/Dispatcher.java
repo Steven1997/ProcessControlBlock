@@ -24,20 +24,18 @@ public class Dispatcher {
 
 
     /**
-     * 创建进程
+     * 创建进程：申请PCB，填写相关信息，挂就绪队列
      */
     public static void Create(int priorityLevel,int totalTime) throws IOException {
-
 
         Process process = new Process("new",priorityLevel,totalTime);
         New.add(process);
         System.out.println(format.format(new Date()) + " 进程" + (Process.getNowId() - 1) + "被创建");
-        System.out.println("**********当前各进程状态如下**********");
         Print();
     }
 
     /**
-     * 撤销进程
+     * 撤销进程：分别在运行、新建、就绪和阻塞队列里寻找目标进程，找到就撤销该进程
      * @param id 要撤销的进程id
      */
     public static void Terminate(int id){
@@ -73,7 +71,6 @@ public class Dispatcher {
         }
         if(isFind){
             System.out.println(format.format(new Date()) + " 进程" + id + "被撤销");
-            System.out.println("**********当前各进程状态如下**********");
             Print();
         }
         else
@@ -82,7 +79,7 @@ public class Dispatcher {
     }
 
     /**
-     * 阻塞进程
+     * 阻塞进程：查看是否有进程在运行，如果有就阻塞该进程
      */
     public static void Block() {
         if(running != null){
@@ -90,7 +87,6 @@ public class Dispatcher {
             blocked.add(running);
             System.out.println(format.format(new Date()) + " 进程" + running.getId() + "被阻塞");
             running = null;
-            System.out.println("**********当前各进程状态如下**********");
             Print();
         }
         else
@@ -99,7 +95,7 @@ public class Dispatcher {
     }
 
     /**
-     * 唤醒进程
+     * 唤醒进程：查看目标进程是否在阻塞队列中，如果在就唤醒，挂就绪队列
      * @param id 要唤醒的进程id
      */
     public static void Wakeup(int id){
@@ -117,7 +113,6 @@ public class Dispatcher {
             temp.setState("ready");
             ready.add(temp);
             System.out.println(format.format(new Date()) + " 进程" + id + "被唤醒");
-            System.out.println("**********当前各进程状态如下**********");
             Print();
         }
         else
@@ -154,7 +149,6 @@ public class Dispatcher {
                 else{
                     System.out.println(format.format(new Date()) + " 进程" + running.getId() + "执行完毕！");
                     running = null;
-                    System.out.println("**********当前各进程状态如下**********");
                     Print();
                 }
                 System.out.println("按照FCFS策略在ready队列里选择新进程运行。。。。。。");
@@ -163,7 +157,6 @@ public class Dispatcher {
             running = front;
             System.out.println("恢复新进程的现场。。。。。。\n");
             System.out.println(format.format(new Date()) + " 进程" + running.getId() + "被调度运行");
-            System.out.println("**********当前各进程状态如下**********");
             Print();
         }
         else if(running != null){
@@ -171,12 +164,10 @@ public class Dispatcher {
             if (running.getNowTime() >= running.getTotalTime()) {
                 System.out.println(format.format(new Date()) + " 进程" + running.getId() + "执行完毕！");
                 running = null;
-                System.out.println("**********当前各进程状态如下**********");
                 Print();
             }
             else{
                 System.out.println(format.format(new Date()) + " 进程" + running.getId() + "被调度运行");
-                System.out.println("**********当前各进程状态如下**********");
                 Print();
             }
         }
@@ -206,7 +197,6 @@ public class Dispatcher {
                 else{
                     System.out.println(format.format(new Date()) + " 进程" + running.getId() + "执行完毕！");
                     running = null;
-                    System.out.println("**********当前各进程状态如下**********");
                     Print();
                 }
                 System.out.println("按照优先级策略在ready队列里选择新进程运行。。。。。。");
@@ -215,7 +205,6 @@ public class Dispatcher {
             ready.remove(temp);
             System.out.println("恢复新进程的现场。。。。。。\n");
             System.out.println(format.format(new Date()) + " 进程" + running.getId() + "被调度运行");
-            System.out.println("**********当前各进程状态如下**********");
             Print();
 
         }
@@ -224,12 +213,10 @@ public class Dispatcher {
             if (running.getNowTime() >= running.getTotalTime()) {
                 System.out.println(format.format(new Date()) + " 进程" + running.getId() + "执行完毕！");
                 running = null;
-                System.out.println("**********当前各进程状态如下**********");
                 Print();
             }
             else{
                 System.out.println(format.format(new Date()) + " 进程" + running.getId() + "被调度运行");
-                System.out.println("**********当前各进程状态如下**********");
                 Print();
             }
         }
@@ -255,7 +242,6 @@ public class Dispatcher {
             temp.setState("ready");
             ready.add(temp);
             System.out.println(format.format(new Date()) + " 进程" + id + "就绪");
-            System.out.println("**********当前各进程状态如下**********");
             Print();
         }
         else
@@ -266,6 +252,7 @@ public class Dispatcher {
      * 打印各进程状态
      */
     public static void Print(){
+        System.out.println("**********当前各进程状态如下**********");
         System.out.println("新建队列：");
         if(New.size() == 0){
             System.out.println("无进程");

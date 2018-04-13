@@ -3,12 +3,15 @@ import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.TimerTask;
 
+/**
+ * 定时器类，定时向用户询问进程管理的操作
+ */
 public class Prompt extends TimerTask {
 
     @Override
     public void run(){
 
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in); //定时向用户询问操作
         System.out.println("**********请按照需要输入以下指令**********");
         System.out.println("1.创建进程 格式：C 进程优先级 进程运行所需总时间");
         System.out.println("2.使进程就绪 格式：R 进程id");

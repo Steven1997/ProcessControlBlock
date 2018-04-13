@@ -13,8 +13,8 @@ public class Process {
     private static int nowId; //即将分配的进程id
 
     static {
-        nowId = 1; //第一个分配的进程id
-        nowAdd = 1000; //第一个分配的进程地址
+        nowId = 1; //第一个分配的进程id，从1开始每次递增1
+        nowAdd = 1000; //第一个分配的进程地址，从1000开始每次递增4
     }
 
     public Process(String state, int priorityLevel, int totalTime) {
