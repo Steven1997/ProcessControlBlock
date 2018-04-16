@@ -40,7 +40,7 @@ public class Dispatcher {
      */
     public static void Terminate(int id){
         boolean isFind = false;
-        if(running != null){
+        if(running != null && running.getId() == id){
             running = null;
             isFind = true;
         }
